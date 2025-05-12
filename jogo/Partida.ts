@@ -62,6 +62,29 @@ export default class Partida{
         return [this.tabuleiro[0][2], this.tabuleiro[1][1], this.tabuleiro[2][0]];
     }
 
-   //entender melhor os métodos de verificar vencedor/empate/fim e tentar desenvolver
+   private verificarVencedor(trinca: (Peca | undefined)[]): SituacaoPartida | undefined {
+        if(trinca.filter(e => e == trinca[0]).length == 3) {
+            if(trinca[0] == Peca.Xis){
+                return SituacaoPartida.VitoriaJogador1;
+            }
+            else if(trinca[0] == Peca.Circulo){
+                return SituacaoPartida.VitoriaJogador2;
+            }
+            else{
+                return undefined;
+            }
+        } else {
+            return undefined;
+        }
+    }
+
+    private verificaEmpate(): SituacaoPartida | undefined {
+        const pecas = [ ...this.tabuleiro[0], ...this.tabuleiro[1], ...this.tabuleiro[2] ];
+        if (pecas.filter( e => e != undefined ).length == 9) {
+            return SituacaoPartida.Empate;
+        } else {
+            return undefined;
+        }
+    }
 
 }
